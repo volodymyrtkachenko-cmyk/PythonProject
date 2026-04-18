@@ -1,0 +1,56 @@
+{% extends 'layout/mainlayout.html' %}
+
+{% block content %}
+{% for post in posts %}
+<h1 class="page-header">
+    New posts
+</h1>
+<p>
+    <strong>Tags:</strong>
+    {% for t in post.tag.all %}
+    <a href="{% url 'tag' slug=t.slug %}"># {{ t.name }}</a>
+    {% empty %}
+    <span>No tags</span>
+    {% endfor %}
+</p>
+
+<!-- First Blog Post -->
+<h2>
+    <a href="{% url 'post' slug=post.slug %}">{{post.title}}</a>
+</h2>
+<p class="lead">
+    by <a href="#">{{post.user}}</a>
+</p>
+<p><span class="glyphicon glyphicon-time"></span>{{post.published_date}}</p>
+<hr>
+<img class="img-responsive" src="{{ post.image }}" alt="">
+<hr>
+<p>{{ post.content|truncatewords:100 }}</p>
+
+<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolore, veritatis, tempora, necessitatibus inventore nisi
+    quam quia repellat ut tempore laborum possimus eum dicta id animi corrupti debitis ipsum officiis rerum.</p>
+<a class="btn btn-primary" href="{% url 'post' slug=post.slug %}">Read More <span
+        class="glyphicon glyphicon-chevron-right"></span></a>
+
+<hr>
+<!-- Posted Comments -->
+            <h3>Коментарі:</h3>
+            {% for c in post.comments.all %}
+            <!-- Comment -->
+            <div class="media">
+                <a class="pull-left" href="#">
+                    <img class="media-object" src="http://placehold.it/64x64" alt="">
+                </a>
+                <div class="media-body">
+                    <h4 class="media-heading">{{ c.user.username }}
+                        <small> {{ c.published_date }}</small>
+                    </h4>
+                    {{ c.content }}
+
+                </div>
+            </div>
+            {% endfor %}
+{% endfor %}
+
+
+{% endblock %}
