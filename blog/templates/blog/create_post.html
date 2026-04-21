@@ -1,0 +1,29 @@
+{% extends 'layout/mainlayout.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div class="modal-body" id="successModal">
+    {% if messages %}
+        {% for message in messages %}
+            <p>{{ message }}</p>
+        {% endfor %}
+
+    {% endif %}
+</div>
+<form method="POST" action="{% url 'create_post' %}">
+    {% csrf_token %}
+    {{ form|crispy}}
+    <input type="submit" class="btn-block btn-default" value="save">
+</form>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        {% if messages %}
+        var modal = new bootstrap.Model(document.getElementById('successModal'), {})
+        modal.show()
+        {% endif %}
+    })
+</script>
+
+{% endblock %}

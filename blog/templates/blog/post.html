@@ -1,4 +1,5 @@
 {% extends 'layout/mainlayout.html' %}
+{% load crispy_forms_tags %}
 
 {% block content %}
 <!-- Page Content -->
@@ -45,12 +46,16 @@
             <!-- Blog Comments -->
 
             <!-- Comments Form -->
+            {% if messages %}
+                {% for message in messages %}
+                    <p>{{ message }}</p>
+                {% endfor %}
+            {% endif %}
             <div class="well">
                 <h4>Leave a Comment:</h4>
-                <form role="form">
-                    <div class="form-group">
-                        <textarea class="form-control" rows="3"></textarea>
-                    </div>
+                <form method="POST">
+                    {{ form|crispy }}
+                    {% csrf_token %}
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
             </div>
