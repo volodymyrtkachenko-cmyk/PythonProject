@@ -1,0 +1,53 @@
+{% extends 'layout/mainlayout.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="container" style="padding-top: 80px; max-width: 420px;">
+
+    {% if messages %}
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        {% for message in messages %}
+        <p class="mb-0">{{ message }}</p>
+        {% endfor %}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endif %}
+
+    <div class="card border-0 shadow-sm" style="background:#161b27;">
+        <div class="card-body p-4 p-sm-5">
+
+            <h4 class="fw-bold text-white mb-1">Вхід</h4>
+            <p class="text-secondary small mb-4">Введіть дані для авторизації</p>
+
+            <form method="POST" class="d-flex flex-column gap-3">
+                {% csrf_token %}
+
+                <div>
+                    <label class="form-label text-secondary small fw-semibold">Логін</label>
+                    <input type="text" name="username" placeholder="введіть логін"
+                           class="form-control bg-dark border-secondary text-light"
+                           style="--bs-body-bg: #1e2535;" required>
+                </div>
+
+                <div>
+                    <label class="form-label text-secondary small fw-semibold">Пароль</label>
+                    <input type="password" name="password" placeholder="••••••••"
+                           class="form-control bg-dark border-secondary text-light"
+                           style="--bs-body-bg: #1e2535;" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100 fw-semibold mt-1">
+                    Увійти
+                </button>
+
+                <p class="text-center text-secondary small mb-0">
+                    Немає акаунта?
+                    <a href="{% url 'register' %}" class="text-primary text-decoration-none">Зареєструватись</a>
+                </p>
+
+            </form>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

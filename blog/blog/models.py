@@ -1,7 +1,20 @@
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 from django.contrib.auth.models import User
 from django.db import models
 from django.utils import timezone
 from django.utils.text import slugify
+
+
+@receiver(post_save, sender=User)
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        UserProfile.objects.create(user=instance)
+
+
+@receiver(post_save, sender=User)
+def save_user_profile(sender, instance, **kwargs):
+    instance.userprofile.save()
 
 
 class Category(models.Model):
@@ -61,7 +74,7 @@ class Comment(models.Model):
     content = models.TextField(default='', max_length=100, verbose_name='опис')
     published_date = models.DateTimeField(default=timezone.now, verbose_name="дата публікації")
     post = models.ForeignKey(Post, on_delete=models.CASCADE, verbose_name='пост', related_name='comments')
-    user = models.ForeignKey(User,on_delete=models.CASCADE, verbose_name="автор", blank=True, null=True )
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="автор", blank=True, null=True)
 
     def __str__(self):
         return f"{self.post.title}"
@@ -78,7 +91,29 @@ class Subscribe(models.Model):
     def __str__(self):
         return self.email
 
-
     class Meta:
         verbose_name = "підписка"
         verbose_name_plural = 'підписки'
+
+
+class UserProfile(models.Model):
+    avatar = models.ImageField(upload_to='blog_profile/', default='blog_profile/user_profile.png')
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.user.username}"
+
+    class Meta:
+        verbose_name = 'user_profile'
+        verbose_name_plural = 'user_profiles'
+
+
+@receiver(post_save, sender=User)
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        UserProfile.objects.create(user=instance)
+
+
+@receiver(post_save, sender=User)
+def save_user_profile(sender, instance, **kwargs):
+    instance.userprofile.save()

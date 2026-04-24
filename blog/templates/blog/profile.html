@@ -1,0 +1,131 @@
+{% extends 'layout/mainlayout.html' %}
+
+{% block content %}
+<div class="container" style="padding-top: 80px; max-width: 700px;">
+
+    <!-- Профіль -->
+    <div class="card border-0 shadow-sm mb-4" style="background:#161b27;">
+        <div class="card-body p-4 p-sm-5">
+
+            <!-- Аватар + ім'я -->
+            <div class="d-flex align-items-center gap-4 mb-4">
+                <img src="{{ profile.avatar.url }}"
+                     class="rounded-circle flex-shrink-0"
+                     width="90" height="90"
+                     style="object-fit:cover; border: 3px solid rgba(79,142,255,.4);">
+                <div>
+                    <h4 class="fw-bold mb-1 text-white">{{ user.username }}</h4>
+                    <p class="mb-1" style="color:#a0aec0;">{{ user.email }}</p>
+                    <span class="badge" style="background:rgba(79,142,255,.2); color:#6ea8fe; font-weight:500;">
+                        Учасник з {{ user.date_joined|date:"d M Y" }}
+                    </span>
+                </div>
+            </div>
+
+            <hr style="border-color:rgba(255,255,255,.08);">
+
+            <!-- Інфо -->
+            <div class="row g-3 mb-4">
+                <div class="col-sm-6">
+                    <p class="mb-1"
+                       style="color:#6b7585; font-size:.8rem; text-transform:uppercase; letter-spacing:.05em;">Імʼя</p>
+                    <p class="fw-semibold mb-0 text-white">{{ user.first_name|default:"—" }}</p>
+                </div>
+                <div class="col-sm-6">
+                    <p class="mb-1"
+                       style="color:#6b7585; font-size:.8rem; text-transform:uppercase; letter-spacing:.05em;">
+                        Прізвище</p>
+                    <p class="fw-semibold mb-0 text-white">{{ user.last_name|default:"—" }}</p>
+                </div>
+                <div class="col-sm-6">
+                    <p class="mb-1"
+                       style="color:#6b7585; font-size:.8rem; text-transform:uppercase; letter-spacing:.05em;">Email</p>
+                    <p class="fw-semibold mb-0 text-white">{{ user.email|default:"—" }}</p>
+                </div>
+                <div class="col-sm-6">
+                    <p class="mb-1"
+                       style="color:#6b7585; font-size:.8rem; text-transform:uppercase; letter-spacing:.05em;">
+                        Постів</p>
+                    <p class="fw-semibold mb-0 text-white">{{ user.post_set.count }}</p>
+                </div>
+            </div>
+
+            <hr style="border-color:rgba(255,255,255,.08);">
+
+            <!-- Останні пости -->
+            <p style="color:#6b7585; font-size:.8rem; text-transform:uppercase; letter-spacing:.05em;" class="mb-3">
+                Останні пости</p>
+
+            {% for post in user.post_set.all|slice:":5" %}
+            <div class="d-flex justify-content-between align-items-center py-2"
+                 style="border-bottom:1px solid rgba(255,255,255,.06);">
+                <a href="{% url 'post' slug=post.slug %}"
+                   class="text-decoration-none" style="color:#6ea8fe;">{{ post.title }}</a>
+                <span style="color:#6b7585; font-size:.85rem;">{{ post.published_date|date:"d.m.Y" }}</span>
+            </div>
+            {% empty %}
+            <p style="color:#6b7585;">Постів ще немає.</p>
+            {% endfor %}
+
+            <div class="mt-4">
+                <a href="{% url 'logout' %}" class="btn btn-sm fw-semibold px-4"
+                   style="color:#ff6b6b; border:1.5px solid rgba(255,107,107,.4); background:transparent;">
+                    Вийти
+                </a>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Зміна паролю -->
+
+    <div class="card border-0 shadow-sm" style="background:#161b27;">
+        <div class="card-body p-4 p-sm-5">
+
+            <h5 class="fw-bold text-white mb-1">Зміна паролю</h5>
+            <p class="mb-4" style="color:#6b7585; font-size:.9rem;">Введіть поточний та новий пароль</p>
+
+            {% if messages %}
+            <div class="alert alert-dismissible fade show mb-4
+                {% for message in messages %}{% if message.tags == 'error' %}alert-danger{% else %}alert-success{% endif %}{% endfor %}"
+                 role="alert">
+                {% for message in messages %}
+                <p class="mb-0">{{ message }}</p>
+                {% endfor %}
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert"></button>
+            </div>
+            {% endif %}
+
+            <form method="POST" class="d-flex flex-column gap-3">
+                {% csrf_token %}
+
+                <div>
+                    <label class="form-label" style="color:#8a9ab0; font-size:.875rem;">Поточний пароль</label>
+                    <input type="password" name="old_password" placeholder="••••••••"
+                           class="form-control" required>
+                </div>
+
+                <div>
+                    <label class="form-label" style="color:#8a9ab0; font-size:.875rem;">Новий пароль</label>
+                    <input type="password" name="new_password1" placeholder="••••••••"
+                           class="form-control" required>
+                </div>
+
+                <div>
+                    <label class="form-label" style="color:#8a9ab0; font-size:.875rem;">Підтвердження нового
+                        паролю</label>
+                    <input type="password" name="new_password2" placeholder="••••••••"
+                           class="form-control" required>
+                </div>
+
+                <div class="d-grid mt-1">
+                    <button type="submit" class="btn btn-primary fw-semibold">Змінити пароль</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

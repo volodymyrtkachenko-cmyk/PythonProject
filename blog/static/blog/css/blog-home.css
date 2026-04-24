@@ -1,13 +1,75 @@
-/*!
- * Start Bootstrap - Blog Home (http://startbootstrap.com/)
- * Copyright 2013-2016 Start Bootstrap
- * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap/blob/gh-pages/LICENSE)
- */
-
+/* ── Base ── */
 body {
-    padding-top: 70px; /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
+    background-color: #0d1117;
+    color: #c9d1d9;
+    padding-top: 60px;
 }
 
+/* ── Typography ── */
+h1, h2, h3, h4, h5, h6 {
+    color: #f0f3f8;
+}
+
+a {
+    color: #4f8eff;
+}
+
+a:hover {
+    color: #7aaaff;
+}
+
+hr {
+    border-color: rgba(255, 255, 255, .08);
+    opacity: 1;
+}
+
+/* ── Cards ── */
+.card .list-unstyled a,
+.card .list-unstyled .nav-link {
+    color: #6ea8fe !important;
+}
+
+.card .list-unstyled a:hover {
+    color: #9ec5fe !important;
+}
+
+/* ── Forms ── */
+.form-control,
+.form-select {
+    background-color: #1e2535 !important;
+    border-color: rgba(255, 255, 255, .15) !important;
+    color: #e0e0e0 !important;
+}
+
+.form-control:focus,
+.form-select:focus {
+    background-color: #252d40 !important;
+    border-color: #4f8eff !important;
+    box-shadow: 0 0 0 3px rgba(79, 142, 255, .15) !important;
+}
+
+.form-control::placeholder {
+    color: rgba(255, 255, 255, .3) !important;
+}
+
+label {
+    color: #8a9ab0 !important;
+    font-size: .875rem;
+    font-weight: 500;
+}
+
+select[multiple] option {
+    background-color: #1e2535;
+    color: #e0e0e0;
+}
+
+/* ── Images ── */
+.img-fluid {
+    background-color: #161b27;
+    border-radius: 8px;
+}
+
+/* ── Footer ── */
 footer {
-    margin: 50px 0;
+    color: #6c757d;
 }

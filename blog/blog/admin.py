@@ -5,6 +5,7 @@ from .models import Post, Category, Tag, Comment, Subscribe
 admin.site.register(Comment)
 admin.site.register(Subscribe)
 
+
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name',)}

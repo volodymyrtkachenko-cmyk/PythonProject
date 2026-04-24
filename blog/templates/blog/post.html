@@ -2,85 +2,89 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-<!-- Page Content -->
-<div class="container">
-
+<div class="container" style="padding-top: 80px;">
     <div class="row">
-
-        <!-- Blog Post Content Column -->
         <div class="col-lg-8">
 
-            <!-- Blog Post -->
+            <!-- Заголовок -->
+            <h1 class="fw-bold">{{ post.title }}</h1>
 
-            <!-- Title -->
-            <h1>{{ post.title }}</h1>
             <p>
                 <strong>Tags:</strong>
                 {% for t in post.tag.all %}
-                <a href="{% url 'tag' slug=t.slug %}"># {{ t.name }}</a>
+                <a href="{% url 'tag' slug=t.slug %}" class="text-decoration-none text-info me-1"># {{ t.name }}</a>
                 {% empty %}
-                <span>No tags</span>
+                <span class="text-secondary">No tags</span>
                 {% endfor %}
             </p>
-            <!-- Author -->
-            <p class="lead">
-                by <a href="#">{{ post.user }}</a>
+
+            <p class="text-secondary">
+                by <a href="#" class="text-decoration-none">{{ post.user }}</a>
             </p>
 
-            <hr>
+            <hr class="border-secondary opacity-25">
 
-            <!-- Date/Time -->
-            <p><span class="glyphicon glyphicon-time"></span>{{ post.published_date }}</p>
+            <!-- BS3: glyphicon glyphicon-time → BS5: SVG -->
+            <p class="text-secondary small d-flex align-items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71z"/>
+                    <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0"/>
+                </svg>
+                {{ post.published_date }}
+            </p>
 
-            <hr>
+            <hr class="border-secondary opacity-25">
 
-            <!-- Preview Image -->
-            <img class="img-responsive" src="{{ post.image }}" alt="">
+            <!-- BS3: img-responsive → BS5: img-fluid -->
+            {% if post.image %}
+            <img class="img-fluid rounded mb-4" src="{{ post.image }}" alt="{{ post.title }}">
+            {% endif %}
 
-            <hr>
-
-            <!-- Post Content -->
             <p class="lead">{{ post.content }}</p>
 
+            <hr class="border-secondary opacity-25">
 
-            <!-- Blog Comments -->
-
-            <!-- Comments Form -->
+            <!-- Повідомлення -->
             {% if messages %}
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
                 {% for message in messages %}
-                    <p>{{ message }}</p>
+                <p class="mb-0">{{ message }}</p>
                 {% endfor %}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
             {% endif %}
-            <div class="well">
-                <h4>Leave a Comment:</h4>
-                <form method="POST">
-                    {{ form|crispy }}
-                    {% csrf_token %}
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </form>
+
+            <!-- BS3: .well → BS5: .card -->
+            <div class="card border-0 shadow-sm mb-4" style="background:#161b27;">
+                <div class="card-body p-4">
+                    <h5 class="text-uppercase text-secondary fw-semibold small mb-3">Leave a Comment</h5>
+                    <form method="POST">
+                        {% csrf_token %}
+                        {{ form|crispy }}
+                        <button type="submit" class="btn btn-primary mt-2">Submit</button>
+                    </form>
+                </div>
             </div>
 
-            <hr>
+            <hr class="border-secondary opacity-25">
 
-            <!-- Posted Comments -->
+            <!-- Коментарі -->
+            <!-- BS3: .media .pull-left .media-object .media-heading → BS5: d-flex gap -->
             {% for c in post.comments.all %}
-            <!-- Comment -->
-            <div class="media">
-                <a class="pull-left" href="#">
-                    <img class="media-object" src="http://placehold.it/64x64" alt="">
-                </a>
-                <div class="media-body">
-                    <h4 class="media-heading">{{ c.user.username }}
-                        <small>{{ c.published_date }}</small>
-                    </h4>
-                    {{ c.content }}
-
+            <div class="d-flex gap-3 mb-4">
+                <img src="http://placehold.it/48x48" alt="{{ c.user.username }}"
+                     class="rounded-circle flex-shrink-0" width="48" height="48">
+                <div>
+                    <h6 class="fw-semibold mb-1">
+                        {{ c.user.username }}
+                        <span class="text-secondary fw-normal small ms-2">{{ c.published_date }}</span>
+                    </h6>
+                    <p class="mb-0 text-secondary small">{{ c.content }}</p>
                 </div>
             </div>
             {% endfor %}
 
         </div>
-
     </div>
 </div>
 {% endblock %}

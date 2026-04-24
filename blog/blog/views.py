@@ -1,10 +1,13 @@
 from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils.timezone import now
+from django.contrib.auth import update_session_auth_hash
 
 from .forms import PostForm, CommentForm, SubscribeForm
-from .models import Post, Category, Tag, Comment
+from .models import Post, Category, Tag, Comment, UserProfile
 
 
 def get_categories():
@@ -33,7 +36,6 @@ def post(request, slug):
             comment = form.save(commit=False)
             comment.published_date = now()
             comment.post = Post.objects.get(slug=slug)
-            comment.user = request.user
             comment.save()
             messages.success(request, "Коментар додано!")
             return redirect('index')
@@ -86,6 +88,7 @@ def search(request):
     return render(request, 'blog/index.html', context)
 
 
+@login_required
 def create_post(request):
     if request.method == 'POST':
         form = PostForm(request.POST)
@@ -103,4 +106,24 @@ def create_post(request):
     return render(request, 'blog/create_post.html', context)
 
 
-
+@login_required
+def profile(request):
+    if request.method == 'POST':
+        user = request.user
+        old_password = request.POST.get('old_password')
+        new_password1 = request.POST.get('new_password1')
+        new_password2 = request.POST.get('new_password2')
+        if not request.user.check_password(old_password):
+            messages.error(request, 'Введіть правильний поточний пароль!')
+        elif new_password1 == old_password:
+            messages.error(request, 'Поточний пароль співпадає з новим!')
+        elif new_password1 != new_password2:
+            messages.error(request, 'Паролі мають збігатися!')
+        else:
+            user.set_password(new_password1)
+            user.save()
+            update_session_auth_hash(request, user)
+            messages.success(request, 'Пароль успішно змінено!')
+            return redirect('profile')
+    profile = UserProfile.objects.get(user=request.user)
+    return render(request, 'blog/profile.html', {'profile': profile})

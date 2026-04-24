@@ -1,36 +1,222 @@
+<style>
+
+    :root {
+        --nav-bg: #0f1117;
+        --nav-border: rgba(255, 255, 255, .07);
+        --nav-height: 60px;
+        --link: rgba(255, 255, 255, .6);
+        --link-hover: #ffffff;
+        --accent: #4f8eff;
+    }
+
+    /* BS3: .navbar-inverse → BS5: .navbar (кастомна темна тема) */
+    .navbar {
+        background: var(--nav-bg) !important;
+        border: none !important;
+        border-bottom: 1px solid var(--nav-border) !important;
+        min-height: var(--nav-height);
+        box-shadow: 0 2px 20px rgba(0, 0, 0, .4);
+    }
+
+    .navbar .navbar-brand {
+        color: #fff !important;
+        font-weight: 700;
+        letter-spacing: .04em;
+    }
+
+    .navbar .navbar-brand:hover {
+        opacity: .8;
+    }
+
+    /* BS3: .nav > li > a → BS5: .navbar-nav .nav-link */
+    .navbar .navbar-nav .nav-link {
+        color: var(--link) !important;
+        font-size: .95rem;
+        font-weight: 500;
+        line-height: var(--nav-height);
+        padding-top: 0;
+        padding-bottom: 0;
+        position: relative;
+        transition: color .2s;
+    }
+
+    .navbar .navbar-nav .nav-link:hover,
+    .navbar .navbar-nav .nav-link:focus {
+        color: var(--link-hover) !important;
+        background: transparent !important;
+    }
+
+    .navbar .navbar-nav .nav-link::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 10px;
+        right: 10px;
+        height: 2px;
+        background: var(--accent);
+        border-radius: 2px 2px 0 0;
+        transform: scaleX(0);
+        transition: transform .2s;
+    }
+
+    .navbar .navbar-nav .nav-link:hover::after {
+        transform: scaleX(1);
+    }
+
+    /* ── Auth кнопки ── */
+    .nav-auth .nav-item {
+        display: block;
+        padding: 0 4px;
+    }
+
+    .nav-auth .nav-link {
+        display: inline-block !important;
+        margin-top: 8px !important;
+        height: 44px !important;
+        line-height: 42px !important;
+        padding: 0 28px !important;
+        border-radius: 6px !important;
+        font-size: 1rem !important;
+        font-weight: 600 !important;
+        letter-spacing: .02em !important;
+        transition: background .2s, color .2s, border-color .2s !important;
+    }
+
+    .nav-auth .nav-link::after {
+        display: none !important;
+    }
+
+    /* Login */
+    .nav-btn-login .nav-link {
+        color: var(--accent) !important;
+        border: 1.5px solid rgba(79, 142, 255, .5) !important;
+        background: transparent !important;
+    }
+
+    .nav-btn-login .nav-link:hover {
+        background: rgba(79, 142, 255, .12) !important;
+        border-color: var(--accent) !important;
+    }
+
+    /* Register */
+    .nav-btn-register .nav-link {
+        color: #fff !important;
+        background: var(--accent) !important;
+        border: 1.5px solid transparent !important;
+    }
+
+    .nav-btn-register .nav-link:hover {
+        background: #3a76e8 !important;
+    }
+
+    /* Logout */
+    .nav-btn-logout .nav-link {
+        color: #ff6b6b !important;
+        border: 1.5px solid rgba(255, 107, 107, .4) !important;
+        background: transparent !important;
+    }
+
+    .nav-btn-logout .nav-link:hover {
+        background: rgba(255, 107, 107, .12) !important;
+        border-color: #ff6b6b !important;
+    }
+
+    /* Create post */
+    .nav-btn-create .nav-link {
+        color: #4caf82 !important;
+        border: 1.5px solid rgba(76, 175, 130, .4) !important;
+        background: transparent !important;
+    }
+
+    .nav-btn-create .nav-link:hover {
+        background: rgba(76, 175, 130, .12) !important;
+        border-color: #4caf82 !important;
+    }
+
+    /* ── Toggler ── */
+    /* BS3: .navbar-toggle → BS5: .navbar-toggler */
+    .navbar .navbar-toggler {
+        border-color: rgba(255, 255, 255, .2) !important;
+    }
+
+    .navbar .navbar-toggler-icon {
+        filter: invert(0.7);
+    }
+
+    .navbar .navbar-toggler:hover .navbar-toggler-icon {
+        filter: invert(1);
+    }
+
+    /* ── Mobile ── */
+    @media (max-width: 767px) {
+        .navbar .navbar-collapse {
+            border-top: 1px solid var(--nav-border) !important;
+            background: #0a0d14;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, .4);
+        }
+
+        .navbar .navbar-nav .nav-link {
+            line-height: 1.4;
+            padding: 11px 15px;
+        }
+
+        .navbar .navbar-nav .nav-link::after {
+            display: none;
+        }
+
+        .nav-auth .nav-item {
+            padding: 5px 12px;
+        }
+
+        .nav-auth .nav-link {
+            width: 100%;
+        }
+    }
+</style>
+
 <!-- Navigation -->
-    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-        <div class="container">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="{% url 'index' %}">Start Bootstrap</a>
-            </div>
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <li>
-                        <a href="{% url 'index' %}">Home</a>
-                    </li>
-                    <li>
-                        <a href="{% url 'about' %}">About</a>
-                    </li>
-                     <li>
-                        <a href="{% url 'contact' %}">Contact</a>
-                    </li>
-                    <li>
-                        <a href="{% url 'create_post' %}">Create post</a>
+<!-- BS3: navbar-inverse navbar-fixed-top → BS5: navbar-dark fixed-top -->
+<nav class="navbar navbar-dark navbar-expand-lg fixed-top" role="navigation">
+    <div class="container">
 
-                    </li>
+        <!-- BS3: navbar-header прибрано, brand та toggler тепер прямо в .container -->
+        <a class="navbar-brand" href="{% url 'index' %}">Start Bootstrap</a>
 
-                </ul>
-            </div>
-            <!-- /.navbar-collapse -->
+        <!-- BS3: navbar-toggle data-toggle data-target → BS5: navbar-toggler data-bs-toggle data-bs-target -->
+        <!-- BS3: .icon-bar × 3 → BS5: .navbar-toggler-icon -->
+        <button class="navbar-toggler" type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#bs-example-navbar-collapse-1"
+                aria-controls="bs-example-navbar-collapse-1"
+                aria-expanded="false"
+                aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+            <!-- BS3: nav navbar-nav → BS5: navbar-nav me-auto -->
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item"><a class="nav-link" href="{% url 'index' %}">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">About</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'contact' %}">Contact</a></li>
+                {% if user.is_authenticated %}
+                <li class="nav-item nav-btn-create"><a class="nav-link" href="{% url 'create_post' %}">Create post</a>
+                </li>
+                {% endif %}
+            </ul>
+
+            <!-- BS3: navbar-right → BS5: ms-auto -->
+            <ul class="navbar-nav ms-auto nav-auth">
+                {% if user.is_authenticated %}
+                <li class="nav-item nav-btn"><a class="nav-link" href="{% url 'profile' %}">Profile</a></li>
+                <li class="nav-item nav-btn-logout"><a class="nav-link" href="{% url 'logout' %}">Logout</a></li>
+                {% else %}
+                <li class="nav-item nav-btn-login"><a class="nav-link" href="{% url 'login' %}">Login</a></li>
+                <li class="nav-item nav-btn-register"><a class="nav-link" href="{% url 'register' %}">Register</a></li>
+                {% endif %}
+            </ul>
+
         </div>
-        <!-- /.container -->
-    </nav>
+    </div>
+</nav>

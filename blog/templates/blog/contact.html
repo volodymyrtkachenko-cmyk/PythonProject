@@ -2,18 +2,30 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
+<div class="container" style="padding-top: 80px; max-width: 600px;">
 
-<div class="modal-body" id="successModal">
     {% if messages %}
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
         {% for message in messages %}
-            <p>{{ message }}</p>
+        <p class="mb-0">{{ message }}</p>
         {% endfor %}
-
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
     {% endif %}
+
+    <div class="card border-0 shadow-sm" style="background:#161b27;">
+        <div class="card-body p-4">
+            <h4 class="card-title mb-4" style="color: white">Contact Us</h4>
+            <form method="POST" action="{% url 'contact' %}">
+                {% csrf_token %}
+                {{ form|crispy }}
+                <!-- BS3: btn-block btn-default → BS5: d-grid + btn-primary -->
+                <div class="d-grid mt-3">
+                    <input type="submit" class="btn btn-primary" value="Send">
+                </div>
+            </form>
+        </div>
+    </div>
+
 </div>
-<form method="POST" action="{% url 'contact' %}">
-    {% csrf_token %}
-    {{ form|crispy }}
-    <input type="submit" class="btn-block btn-default" value="save">
-</form>
 {% endblock %}
