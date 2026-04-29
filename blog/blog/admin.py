@@ -1,9 +1,10 @@
 from django.contrib import admin
 
-from .models import Post, Category, Tag, Comment, Subscribe
+from .models import Post, Category, Tag, Comment, Subscribe, PostImage
 
 admin.site.register(Comment)
 admin.site.register(Subscribe)
+admin.site.register(PostImage)
 
 
 @admin.register(Category)

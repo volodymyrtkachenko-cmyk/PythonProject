@@ -18,7 +18,9 @@ def get_categories():
 
 def index(request):
     posts = Post.objects.all().order_by('-published_date')
-    context = {"posts": posts}
+    posts_images = Post.objects.all().prefetch_related('images')
+    context = {"posts": posts,
+               "posts_images": posts_images}
     context.update(get_categories())
     return render(request, 'blog/index.html', context)
 

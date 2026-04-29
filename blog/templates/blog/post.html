@@ -36,13 +36,22 @@
             <hr class="border-secondary opacity-25">
 
             <!-- BS3: img-responsive → BS5: img-fluid -->
-            {% if post.image %}
-            <img class="img-fluid rounded mb-4" src="{{ post.image }}" alt="{{ post.title }}">
-            {% endif %}
+            <div class="post-content">
+                {% if post.images.exists %}
+                <div class="row">
+                    {% for img_obj in post.images.all %}
+                    <div class="col-md-6 mb-3">
+                        <img src="{{ img_obj.image.url }}" class="img-fluid rounded"
+                             alt="Фото к посту {{ post.title }}">
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <img src="{{ post.image }}" class="img-fluid rounded mb-4" alt="{{ post.title }}">
+                {% endif %}
 
-            <p class="lead">{{ post.content }}</p>
-
-            <hr class="border-secondary opacity-25">
+                <p>{{ post.content }}</p>
+            </div>
 
             <!-- Повідомлення -->
             {% if messages %}
