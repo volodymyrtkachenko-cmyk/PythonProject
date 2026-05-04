@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block main %}
+
+<div class="d-flex" style="min-height: calc(100vh - 60px);">
+
+    <!-- Sidebar (фіксований зліва) -->
+    <aside style="width: 220px; min-width: 220px; background-color: #111; border-right: 1px solid rgba(255,255,255,0.08); padding-top: 20px;">
+        <div class="px-3 py-2 border-bottom border-secondary border-opacity-25">
+            <a href="{% url 'shop_index' %}" class="text-white fw-semibold small text-uppercase">Категорії</a>
+        </div>
+        <ul class="list-unstyled mb-0">
+            {% for category in categories %}
+            <li class="border-bottom border-secondary border-opacity-10">
+                <a href="{% url 'category_view' slug=category.slug %}" class="d-block px-3 py-2 text-secondary text-decoration-none sidebar-link">
+                    {{ category.name }}
+                </a>
+            </li>
+            {% empty %}
+            <li class="px-3 py-2 text-secondary small">Категорій немає</li>
+            {% endfor %}
+        </ul>
+    </aside>
+
+    <!-- Основний контент -->
+    <main class="flex-grow-1 p-4">
+        {% block content %} {% endblock %}
+    </main>
+
+</div>
+
+<style>
+    .sidebar-link:hover {
+        color: #fff !important;
+        background-color: rgba(255, 255, 255, 0.05);
+    }
+</style>
+
+{% endblock %}

@@ -1,0 +1,59 @@
+{% extends 'layout/shop_layout.html' %}
+
+{% block content %}
+
+<div class="row g-4">
+
+    <!-- Фото -->
+    <div class="col-12 col-md-5">
+        <div class="rounded-3 overflow-hidden"
+             style="aspect-ratio: 1/1; background-color: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);">
+            {% if product.image %}
+            <img src="{{ product.image.url }}" alt="{{ product.title }}"
+                 class="w-100 h-100" style="object-fit: cover;">
+            {% endif %}
+        </div>
+
+        <!-- Додаткові фото -->
+        {% if product.images.all %}
+        <div class="d-flex gap-2 mt-2 flex-wrap">
+            {% for img in product.images.all %}
+            <div class="rounded-2 overflow-hidden"
+                 style="width: 70px; height: 70px; border: 1px solid rgba(255,255,255,0.08); cursor: pointer;">
+                <img src="{{ img.image.url }}" class="w-100 h-100" style="object-fit: cover;">
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- Інфо -->
+    <div class="col-12 col-md-7 d-flex flex-column gap-3">
+
+        <div>
+            {% if product.category %}
+            <span class="text-secondary small">{{ product.category.name }}</span>
+            {% endif %}
+            <h2 class="text-white fw-semibold mt-1 mb-0">{{ product.title }}</h2>
+        </div>
+
+        <div>
+            <span class="fs-3 fw-bold text-white">{{ product.price }} ₴</span>
+        </div>
+
+        <p class="text-secondary mb-0" style="line-height: 1.7;">{{ product.content }}</p>
+
+        <p class="text-secondary small mb-0">
+            Додано: {{ product.published_date|date:"d.m.Y" }}
+        </p>
+
+        <div class="mt-auto">
+            <button class="btn btn-outline-light px-4 py-2">
+                Додати до кошика
+            </button>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}
