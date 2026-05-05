@@ -210,6 +210,19 @@
 
             <!-- BS3: navbar-right → BS5: ms-auto -->
             <ul class="navbar-nav ms-auto nav-auth">
+                <li class="nav-item">
+                    <a class="nav-link px-3 position-relative" href="{% url 'cart:cart_detail' %}">Cart
+
+                        {% if cart_count > 0 %}
+                            <span id="cart-count"
+                              class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                              {{ cart_count }}
+                            </span>
+                        {% endif %}
+
+
+                    </a>
+                </li>
                 {% if user.is_authenticated %}
                 <li class="nav-item nav-btn"><a class="nav-link" href="{% url 'profile' %}">Profile</a></li>
                 <li class="nav-item nav-btn-logout"><a class="nav-link" href="{% url 'logout' %}">Logout</a></li>
@@ -217,6 +230,7 @@
                 <li class="nav-item nav-btn-login"><a class="nav-link" href="{% url 'login' %}">Login</a></li>
                 <li class="nav-item nav-btn-register"><a class="nav-link" href="{% url 'register' %}">Register</a></li>
                 {% endif %}
+
             </ul>
 
         </div>

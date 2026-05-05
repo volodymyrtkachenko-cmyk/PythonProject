@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block main %}
+
+<div class="container mt-5">
+
+    <!-- Додав text-light, щоб заголовок точно був світлим -->
+    <h2 class="mb-4 text-light">🛒 Your Cart</h2>
+
+    {% if cart %}
+    <!-- Додав bg-dark, text-light та border-secondary для темної теми картки -->
+    <div class="card shadow-sm bg-dark text-light border-secondary">
+        <div class="card-body">
+
+            <div class="table-responsive">
+                <!-- Змінив таблицю на повністю темну за допомогою table-dark -->
+                <table class="table table-dark table-hover align-middle mb-0">
+                    <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th class="text-center">Quantity</th>
+                        <th class="text-end">Price</th>
+                        <th class="text-end">Total</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    {% for item in cart %}
+                    <tr>
+                        <td>
+                            <a href="{% url 'product_view' item.product.slug %}"
+                               class="text-decoration-none text-light table-link">
+                                <strong>{{ item.product.title }}</strong>
+                            </a>
+                        </td>
+
+                        <td class="text-center">
+                            <span class="badge bg-primary">
+                                {{ item.quantity }}
+                            </span>
+                        </td>
+
+                        <td class="text-end">
+                            ${{ item.price }}
+                        </td>
+
+                        <td class="text-end fw-bold">
+                            ${{ item.total_price }}
+                        </td>
+
+                        <td class="text-end">
+                            <a href="{% url 'cart:cart_remove' item.product.id %}"
+                               class="btn btn-sm btn-outline-danger">
+                                Remove
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Додав px-2 для кращого вирівнювання -->
+            <div class="d-flex justify-content-between mt-4 px-2">
+                <h4 class="mb-0">Total:</h4>
+                <h4 class="text-success fw-bold mb-0">
+                    ${{ cart.get_total_price }}
+                </h4>
+            </div>
+
+        </div>
+    </div>
+
+    {% else %}
+    <div class="alert alert-dark border-secondary text-light">
+        Your cart is empty.
+    </div>
+    {% endif %}
+
+</div>
+{% endblock %}
