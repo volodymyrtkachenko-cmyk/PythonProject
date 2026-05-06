@@ -134,7 +134,6 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
 ]
 
-# НОВИЙ РЯДОК: Папка для сервера, куди collectstatic збере всі файли проєкту
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 CART_SESSION_ID = 'cart'
