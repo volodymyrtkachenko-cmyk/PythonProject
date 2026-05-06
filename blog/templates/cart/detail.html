@@ -62,12 +62,19 @@
                 </table>
             </div>
 
-            <!-- Додав px-2 для кращого вирівнювання -->
-            <div class="d-flex justify-content-between mt-4 px-2">
+            <!-- Додав align-items-center для кращого вертикального вирівнювання -->
+            <div class="d-flex justify-content-between align-items-center mt-4 px-2">
                 <h4 class="mb-0">Total:</h4>
                 <h4 class="text-success fw-bold mb-0">
                     ${{ cart.get_total_price }}
                 </h4>
+            </div>
+
+            <!-- БЛОК З НОВОЮ КНОПКОЮ ОФОРМЛЕННЯ ЗАМОВЛЕННЯ -->
+            <div class="text-end mt-4 px-2">
+                <a href="{% url '' %}" class="btn btn-success btn-lg px-5">
+                    Order
+                </a>
             </div>
 
         </div>

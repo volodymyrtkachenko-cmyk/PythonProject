@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'gallery',
     'shop',
     'sorl.thumbnail',
-    'cart'
+    'cart',
+    'order'
 ]
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap5'

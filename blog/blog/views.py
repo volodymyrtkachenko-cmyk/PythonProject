@@ -22,7 +22,7 @@ def index(request):
     context = {"posts": posts,
                "posts_images": posts_images}
     context.update(get_categories())
-    return render(request, 'blog/index.html', context)
+    return render(request, 'blog/order_create.html', context)
 
 
 def about(request):
@@ -71,7 +71,7 @@ def category(request, slug):
     posts = Post.objects.filter(category=c).order_by('-published_date')
     context = {"posts": posts, }
     context.update(get_categories())
-    return render(request, 'blog/index.html', context)
+    return render(request, 'blog/order_create.html', context)
 
 
 def tag(request, slug):
@@ -79,7 +79,7 @@ def tag(request, slug):
     posts = Post.objects.filter(tag=t).order_by('-published_date')
     context = {"posts": posts, }
     context.update(get_categories())
-    return render(request, 'blog/index.html', context)
+    return render(request, 'blog/order_create.html', context)
 
 
 def search(request):
@@ -87,7 +87,7 @@ def search(request):
     posts = Post.objects.filter(Q(content__icontains=query) | Q(title__icontains=query)).order_by('-published_date')
     context = {"posts": posts}
     context.update(get_categories())
-    return render(request, 'blog/index.html', context)
+    return render(request, 'blog/order_create.html', context)
 
 
 @login_required
