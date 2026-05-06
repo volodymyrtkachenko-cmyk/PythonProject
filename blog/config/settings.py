@@ -127,12 +127,15 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'  # Додав слеш на початку
 
+# Папка, де лежать ваші локальні файли (css, js, картинки дизайну)
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
 ]
 
+# НОВИЙ РЯДОК: Папка для сервера, куди collectstatic збере всі файли проєкту
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 CART_SESSION_ID = 'cart'
 
