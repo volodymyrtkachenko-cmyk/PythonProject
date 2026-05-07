@@ -4,14 +4,14 @@ from .models import Product, Category, Product_image
 def index(request):
     products = Product.objects.all()
     context = {'products': products}
-    return render(request, 'shop/order_create.html', context)
+    return render(request, 'shop/index.html', context)
 
 
 def category_view(request, slug):
     p = get_object_or_404(Category, slug=slug)
     products = Product.objects.filter(category=p).order_by('-published_date')
     context = {'products': products}
-    return render(request, 'shop/order_create.html', context)
+    return render(request, 'shop/index.html', context)
 
 
 def product_view(request, slug):

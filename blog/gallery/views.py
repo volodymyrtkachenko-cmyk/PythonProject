@@ -9,7 +9,7 @@ from .forms import GalleryImageForm
 def gallery(request):
     images = GalleryImage.objects.all()
     context = {'images': images}
-    return render(request, 'gallery/order_create.html', context)
+    return render(request, 'gallery/index.html', context)
 
 
 def uploads(request):
