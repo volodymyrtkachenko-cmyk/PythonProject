@@ -23,9 +23,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-smtk#r8+ysp$&__)z=^-p@_ucw5_^@v(xq_gwpgiory68l%xzc'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['volodymyr.pythonanywhere.com']
 
 # Application definition
 
@@ -127,9 +127,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
-STATIC_URL = '/static/'  # Додав слеш на початку
+STATIC_URL = '/static/'
 
-# Папка, де лежать ваші локальні файли (css, js, картинки дизайну)
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
 ]

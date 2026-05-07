@@ -22,7 +22,7 @@ def index(request):
     context = {"posts": posts,
                "posts_images": posts_images}
     context.update(get_categories())
-    return render(request, 'blog/order_create.html', context)
+    return render(request, 'blog/index.html', context)
 
 
 def about(request):
